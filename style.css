@@ -1,0 +1,790 @@
+/* style.css */
+:root {
+    --bg-color: #0f172a;
+    --card-bg: rgba(30, 41, 59, 0.6);
+    --primary: #fbbf24;
+    --primary-hover: #f59e0b;
+    --secondary: #334155;
+    --secondary-hover: #475569;
+    --danger: #ef4444;
+    --danger-hover: #dc2626;
+    --success: #10b981;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --border-color: rgba(255, 255, 255, 0.1);
+
+    --radius-sm: 10px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Tajawal', sans-serif;
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+    background-attachment: fixed;
+    color: var(--text-main);
+    line-height: 1.6;
+    overflow-x: hidden;
+    user-select: none;
+    /* Prevent text selection on mobile games */
+    -webkit-tap-highlight-color: transparent;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 500px;
+    /* Mobile width constraint for desktop view */
+    margin: 0 auto;
+    min-height: 100vh;
+    position: relative;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ==================================
+   Screens & Transitions 
+================================== */
+.screen {
+    flex: 1;
+    display: none;
+    flex-direction: column;
+    animation: fadeIn 0.4s ease forwards;
+}
+
+.screen.active {
+    display: flex;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes heartbeat {
+    0% {
+        transform: scale(1);
+    }
+
+    15% {
+        transform: scale(1.3);
+    }
+
+    30% {
+        transform: scale(1);
+    }
+
+    45% {
+        transform: scale(1.3);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.heartbeat {
+    animation: heartbeat 1.5s infinite;
+}
+
+/* Overlay / Black Screen Transition */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #000;
+    z-index: 9999;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.overlay.active {
+    display: flex;
+    opacity: 1;
+}
+
+/* ==================================
+   Typography & Headers 
+================================== */
+header {
+    text-align: center;
+    margin-bottom: 25px;
+    padding-top: 20px;
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 5px;
+}
+
+h1 span {
+    color: var(--primary);
+}
+
+h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+}
+
+.highlight-text {
+    color: var(--primary);
+    font-weight: bold;
+}
+
+/* ==================================
+   Cards & Layouts
+================================== */
+.card {
+    background: var(--card-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: var(--radius-lg);
+    padding: 25px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--border-color);
+    margin-bottom: 25px;
+}
+
+.center-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px 0;
+}
+
+/* ==================================
+   Inputs & Controls 
+================================== */
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text-muted);
+}
+
+.label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.label-row label {
+    margin-bottom: 0;
+}
+
+/* Stepper */
+.stepper {
+    display: flex;
+    align-items: center;
+    background: var(--bg-color);
+    border-radius: var(--radius-md);
+    padding: 5px;
+    width: fit-content;
+}
+
+.stepper span {
+    width: 50px;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+/* Custom Toggle Switch for Helper */
+.checkbox-label {
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-size: 1rem !important;
+    color: var(--text-main) !important;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.checkbox-label:hover {
+    border-color: var(--primary);
+}
+
+.checkbox-label input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 60px;
+    /* Reduced from 50px to make room for toggle, oops, let's keep it 50px but ensure it shrinks flex-shrink */
+    flex-shrink: 0;
+    height: 26px;
+    background: var(--secondary);
+    border-radius: 20px;
+    position: relative;
+    cursor: pointer;
+    outline: none;
+    transition: var(--transition);
+    margin-right: 15px;
+    /* Added spacing between text and toggle */
+}
+
+.checkbox-label input[type="checkbox"]::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 20px;
+    height: 20px;
+    background: white;
+    border-radius: 50%;
+    transition: var(--transition);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.checkbox-label input[type="checkbox"]:checked {
+    background: var(--success);
+}
+
+.checkbox-label input[type="checkbox"]:checked::after {
+    transform: translateX(24px);
+}
+
+/* Chip Selector */
+.chip-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.chip {
+    padding: 8px 16px;
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.chip.active {
+    background: var(--primary);
+    color: #000;
+    border-color: var(--primary);
+}
+
+.chip.locked {
+    background-color: var(--card-bg);
+    color: var(--text-muted);
+    border: 1px dashed var(--text-muted);
+}
+
+.chip.locked:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.chip.unlocked-paid {
+    border-color: var(--success);
+}
+
+.price-tag {
+    background: rgba(0, 0, 0, 0.4);
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    color: var(--primary);
+    margin-right: 5px;
+    font-weight: bold;
+}
+
+/* Text Input & Add Button */
+.add-player-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+input[type="text"] {
+    flex: 1;
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    padding: 12px 15px;
+    border-radius: var(--radius-md);
+    font-family: inherit;
+    font-size: 1rem;
+    transition: var(--transition);
+}
+
+input[type="text"]:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+/* Lists */
+.players-list {
+    list-style: none;
+    max-height: 200px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+.players-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg-color);
+    padding: 10px 15px;
+    border-radius: var(--radius-md);
+    margin-bottom: 8px;
+    animation: fadeIn 0.3s ease;
+}
+
+.btn-remove-player {
+    background: none;
+    border: none;
+    color: var(--danger);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 5px;
+}
+
+/* ==================================
+   Buttons 
+================================== */
+button {
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    transition: var(--transition);
+    border-radius: var(--radius-md);
+    font-weight: 700;
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.primary-btn {
+    background: var(--primary);
+    color: #000;
+}
+
+.primary-btn:hover:not(:disabled) {
+    background: var(--primary-hover);
+}
+
+.secondary-btn {
+    background: var(--secondary);
+    color: var(--text-main);
+}
+
+.secondary-btn:hover:not(:disabled) {
+    background: var(--secondary-hover);
+}
+
+.danger-btn {
+    background: var(--danger);
+    color: white;
+}
+
+.danger-btn:hover:not(:disabled) {
+    background: var(--danger-hover);
+}
+
+.large {
+    width: 100%;
+    padding: 16px;
+    font-size: 1.2rem;
+    margin-top: auto;
+}
+
+.small {
+    padding: 10px 20px;
+}
+
+.icon-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-sm);
+    background: var(--secondary);
+    color: white;
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.highlight {
+    box-shadow: 0 4px 15px rgba(251, 191, 36, 0.5);
+}
+
+/* ==================================
+   Specific Screens components
+================================== */
+
+/* Reveal Role */
+.secret-box {
+    background: var(--bg-color);
+    border: 2px dashed var(--primary);
+    padding: 30px;
+    border-radius: var(--radius-lg);
+    margin: 30px 0;
+    min-width: 250px;
+}
+
+.secret-box h3 {
+    font-size: 2rem;
+    color: var(--primary);
+}
+
+.reveal-hint {
+    color: var(--text-muted);
+    margin-bottom: 20px;
+}
+
+/* Playing Screen */
+.question-interaction {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin: 30px 0;
+}
+
+.player-badge {
+    padding: 10px 20px;
+    border-radius: var(--radius-md);
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+.player-badge.asker {
+    background: var(--primary);
+    color: #000;
+}
+
+.player-badge.target {
+    background: var(--secondary);
+    color: white;
+}
+
+.asks-text {
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+#btn-next-question {
+    width: 100%;
+    padding: 12px;
+}
+
+/* Voting Grid */
+.stacked-grid,
+.voting-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 30px;
+    max-height: 50vh;
+    overflow-y: auto;
+}
+
+/* Credits */
+.credits {
+    text-align: center;
+    padding: 20px 0 10px 0;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin-top: auto;
+    opacity: 0.8;
+}
+
+.vote-btn {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    padding: 15px;
+    font-size: 1.1rem;
+    border-radius: var(--radius-md);
+}
+
+.vote-btn:hover:not(:disabled) {
+    background: var(--secondary-hover);
+    border-color: var(--primary);
+}
+
+.vote-btn.selected {
+    background: var(--primary);
+    color: #000;
+    border-color: var(--primary);
+}
+
+/* Results & Leaderboard */
+.leaderboard h4 {
+    margin: 20px 0 10px;
+    color: var(--text-muted);
+}
+
+.leaderboard ul,
+.final-leaderboard ul {
+    list-style: none;
+}
+
+.leaderboard li,
+.final-leaderboard li {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 15px;
+    background: var(--bg-color);
+    margin-bottom: 8px;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+}
+
+.leaderboard li span:last-child,
+.final-leaderboard li span:last-child {
+    color: var(--primary);
+}
+
+/* Stats */
+.stats-list {
+    margin-top: 15px;
+}
+
+.stats-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: var(--radius-sm);
+    margin-bottom: 8px;
+    color: var(--text-main);
+}
+
+.stats-icon {
+    font-size: 1.5rem;
+}
+
+/* Icons */
+.icon-mobile {
+    font-size: 5rem;
+    margin-bottom: 20px;
+}
+
+.icon-trophy {
+    font-size: 6rem;
+    margin-bottom: 20px;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--secondary);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
+}
+
+/* ==================================
+   Mobile Responsiveness (Media Queries)
+================================== */
+@media (max-width: 480px) {
+    .app-container {
+        padding: 15px 10px;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    .card {
+        padding: 15px;
+    }
+
+    .secret-box {
+        padding: 20px 10px;
+        min-width: 200px;
+    }
+
+    .secret-box h3 {
+        font-size: 1.6rem;
+    }
+
+    .large {
+        padding: 14px;
+        font-size: 1.1rem;
+    }
+
+    .vote-btn {
+        padding: 12px;
+        font-size: 1rem;
+    }
+
+    .icon-mobile {
+        font-size: 4rem;
+    }
+
+    .checkbox-label {
+        font-size: 0.9rem !important;
+        padding: 12px;
+    }
+
+    .checkbox-label input[type="checkbox"] {
+        width: 45px;
+        height: 24px;
+    }
+}
+
+/* ==================================
+   Custom Modals (Bank, Hints, Purchase)
+================================== */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(5px);
+    z-index: 10000;
+    display: none;
+    /* hidden by default */
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal-overlay.active {
+    display: flex;
+    opacity: 1;
+}
+
+.modal-card {
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    width: 100%;
+    max-width: 400px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+    transform: translateY(20px);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.modal-overlay.active .modal-card {
+    transform: translateY(0);
+}
+
+.modal-icon {
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+.modal-title {
+    font-size: 1.5rem;
+    color: var(--text-main);
+    margin-bottom: 15px;
+}
+
+.modal-body {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.modal-actions button {
+    flex: 1;
+}
+
+/* Custom list items for modal (like selecting player to pay) */
+.modal-list {
+    list-style: none;
+    margin: 15px 0;
+    max-height: 200px;
+    overflow-y: auto;
+    text-align: right;
+}
+
+.modal-list-item {
+    padding: 12px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.modal-list-item:hover {
+    border-color: var(--primary);
+}
+
+.modal-list-item.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}

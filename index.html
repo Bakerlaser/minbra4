@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- PWA Required Meta Tags -->
+    <meta name="theme-color" content="#f5a623">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="برا السالفة">
+
+    <!-- Comprehensive Icon Tags -->
+    <link rel="apple-touch-icon" href="./icon-192.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="./icon-192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="./icon-192.png">
+    <link rel="apple-touch-icon" sizes="167x167" href="./icon-192.png">
+
+    <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="./icon-512.png">
+    <link rel="shortcut icon" href="./icon-192.png">
+
+    <link rel="manifest" href="manifest.json">
+    <title>مين برا السالفة</title>
+    <!-- Use Google Fonts (Tajawal) or fallback -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="app-container">
+
+        <!-- =======================
+             SCREEN: MODE SELECT 
+             ======================= -->
+        <div id="screen-mode-select" class="screen active">
+            <div class="center-content">
+                <h1>مين برا <span>السالفة؟</span></h1>
+                <p class="subtitle" style="margin-bottom: 30px;">لعبة الجوال التمريرية الجماعية</p>
+                <button id="btn-mode-local" class="primary-btn large highlight" style="margin-bottom: 15px;">👤 جهاز
+                    واحد (تمرير الجهاز)</button>
+                <button id="btn-mode-online" class="secondary-btn large highlight"
+                    style="background: var(--primary); color: #000;">🌐 أونلاين (كل شخص وجهازه)</button>
+
+                <div style="margin-top: 20px;">
+                    <button id="btn-show-bank" class="points-badge"
+                        style="background: var(--card-bg); color: var(--primary); padding: 5px 15px; border-radius: 20px; font-weight: bold; font-size: 1.1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); display: inline-flex; align-items: center; gap: 5px; cursor: pointer; border: 1px solid var(--primary); margin: 0 auto;">
+                        <span>🏦</span> البنك: <span id="app-points-display" style="margin-right: 5px;">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- =======================
+             SCREEN: ONLINE LOBBY
+             ======================= -->
+        <div id="screen-online-lobby" class="screen">
+            <header>
+                <h2>العب <span>أونلاين</span></h2>
+                <button id="btn-lobby-back" class="icon-btn"
+                    style="position: absolute; top: 15px; right: 15px; font-size: 1rem;">
+                    &lt;</button>
+            </header>
+            <main>
+                <div class="card setup-card">
+                    <div class="input-group">
+                        <label>اسمك في اللعبة:</label>
+                        <input type="text" id="online-player-name" placeholder="اكتب اسمك..." autocomplete="off">
+                    </div>
+
+                    <hr style="border-color: var(--border-color); margin: 20px 0;">
+
+                    <div style="display: flex; gap: 10px; flex-direction: column;">
+                        <button id="btn-create-room" class="primary-btn large highlight">إنشاء غرفة جديدة</button>
+
+                        <div style="text-align: center; margin: 10px 0; color: var(--text-muted);">أو</div>
+
+                        <div style="display: flex; gap: 10px;">
+                            <input type="text" id="room-code-input" placeholder="كود الغرفة..." maxlength="4"
+                                style="flex: 2; text-align: center; font-size: 1.2rem; letter-spacing: 5px;">
+                            <button id="btn-join-room" class="secondary-btn" style="flex: 1;">إنضمام</button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+
+        <!-- =======================
+             SCREEN: HOME / SETUP 
+             ======================= -->
+        <div id="screen-setup" class="screen">
+            <header>
+                <div style="position: relative;">
+                    <button id="btn-setup-back" class="icon-btn"
+                        style="position: absolute; right: 0; top: 0; font-size: 1rem;">
+                        &lt;</button>
+                    <div>
+                        <h2 id="setup-title-text" style="margin-top: 10px;">إعدادات <span>اللعبة</span></h2>
+                        <h3 id="room-code-display"
+                            style="display: none; color: var(--primary); letter-spacing: 5px; font-size: 2rem; margin: 10px 0;">
+                        </h3>
+                    </div>
+                </div>
+            </header>
+
+            <main>
+                <div class="card setup-card">
+                    <div class="input-group">
+                        <label for="roundCount">عدد الجولات:</label>
+                        <div class="stepper">
+                            <button id="btn-rounds-minus" class="icon-btn">-</button>
+                            <span id="rounds-display">3</span>
+                            <button id="btn-rounds-plus" class="icon-btn">+</button>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>عدد برا السالفة:</label>
+                        <div class="stepper">
+                            <button id="btn-spies-minus" class="icon-btn">-</button>
+                            <span id="spies-display">1</span>
+                            <button id="btn-spies-plus" class="icon-btn">+</button>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="helper-checkbox">
+                            تفعيل دور "المساعد" (يعرف الكلمة وبرا السالفة)
+                        </label>
+                        <label class="checkbox-label" style="margin-top: 10px;">
+                            <input type="checkbox" id="double-agent-checkbox">
+                            <span style="color: var(--danger);">🔥 تفعيل "الجاسوس المغفل"</span> (تظهر للجاسوس كلمة
+                            مزيفة)
+                        </label>
+                        <label class="checkbox-label" style="margin-top: 10px;">
+                            <input type="checkbox" id="forbidden-words-checkbox">
+                            <span style="color: var(--primary);">💣 تفعيل "الكلمات المحرمة"</span> (يُمنع على اللاعبين
+                            قول ٣ كلمات محددة)
+                        </label>
+                    </div>
+
+                    <div class="input-group">
+                        <label>التصنيف:</label>
+                        <div id="category-selector" class="chip-group">
+                            <!-- Categories populated via JS -->
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <div class="label-row">
+                            <label>أسماء اللاعبين (٣ - ١٢):</label>
+                            <span id="player-count">0</span>
+                        </div>
+                        <div class="add-player-form">
+                            <input type="text" id="player-name-input" placeholder="اكتب اسم اللاعب..."
+                                autocomplete="off">
+                            <button id="btn-add-player" class="primary-btn small">إضافة</button>
+                        </div>
+                        <ul id="players-list" class="players-list">
+                            <!-- Player items populated here -->
+                        </ul>
+                    </div>
+                    <div id="waiting-host-msg"
+                        style="display: none; text-align: center; color: var(--primary); margin-top: 10px;">
+                        في انتظار المضيف لبدء اللعبة...
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button id="btn-start-game" class="primary-btn large highlight" disabled>ابدأ اللعبة</button>
+                    <button id="btn-install-app" class="secondary-btn large mt-2"
+                        style="display: none; background: var(--success); color: white;">تثبيت اللعبة 📲</button>
+                </div>
+            </main>
+        </div>
+
+
+        <!-- =======================
+             SCREEN: PASS DEVICE 
+             ======================= -->
+        <div id="screen-pass" class="screen">
+            <div class="center-content">
+                <i class="icon-mobile">📱</i>
+                <h2 id="pass-message">أعطِ الجهاز إلى <span>---</span></h2>
+                <p class="instructions">لا تدع أحداً يرى الشاشة!</p>
+                <button id="btn-ready" class="primary-btn large">أنا مستعد</button>
+            </div>
+        </div>
+
+
+        <!-- =======================
+             SCREEN: REVEAL ROLE 
+             ======================= -->
+        <div id="screen-reveal" class="screen">
+            <div class="center-content card reveal-card">
+                <p class="reveal-hint">أنت الان تنظر إلى الشاشة</p>
+                <h2 id="role-title">السالفة هي...</h2>
+                <div class="secret-box">
+                    <h3 id="secret-word">---</h3>
+                </div>
+                <button id="btn-next-player" class="primary-btn large highlight">فهمت، التالي</button>
+            </div>
+        </div>
+
+
+        <!-- =======================
+             SCREEN: PLAYING 
+             ======================= -->
+        <div id="screen-playing" class="screen">
+            <header>
+                <h2>وقت الأسئلة!</h2>
+            </header>
+
+            <main>
+                <div class="card playing-card">
+                    <p class="question-instruction">الدور الآن على:</p>
+                    <div class="question-interaction">
+                        <span id="asker-name" class="player-badge asker">---</span>
+                        <span class="asks-text">يسأل</span>
+                        <span id="target-name" class="player-badge target">---</span>
+                    </div>
+                    <button id="btn-next-question" class="secondary-btn">السؤال التالي</button>
+                </div>
+
+                <button id="btn-end-playing" class="danger-btn large">التصويت (إنهاء الجولة)</button>
+            </main>
+        </div>
+
+
+        <!-- =======================
+             SCREEN: VOTING 
+             ======================= -->
+        <div id="screen-voting" class="screen">
+            <header>
+                <h2>وقت التصويت</h2>
+                <p id="voting-instruction">دور <span>---</span> في التصويت</p>
+            </header>
+
+            <main>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <p class="vote-prompt" style="margin-bottom: 0;">من تعتقد أنه برا السالفة؟</p>
+                    <button id="btn-use-hint" class="secondary-btn small"
+                        style="background: var(--primary); color: #000; font-weight: bold; border-radius: 20px; display: flex; align-items: center; gap: 5px;">
+                        <span>💡</span> تلميح (30 🪙)
+                    </button>
+                </div>
+                <div id="hint-display-area"
+                    style="display: none; background: rgba(251, 191, 36, 0.1); border: 1px dashed var(--primary); padding: 10px; border-radius: 8px; margin-bottom: 15px; color: var(--primary); font-weight: bold; text-align: center;">
+                    <!-- Hint text will appear here -->
+                </div>
+                <div id="voting-list" class="voting-grid">
+                    <!-- Voting options populated via JS -->
+                </div>
+            </main>
+        </div>
+
+
+        <!-- =======================
+             SCREEN: SUSPENSE REVEAL 
+             ======================= -->
+        <div id="screen-suspense" class="screen">
+            <div class="center-content">
+                <div class="heartbeat" style="font-size: 5rem; margin-bottom: 20px;">🥁</div>
+                <h2>لحظة الحسم...</h2>
+                <h3 id="suspense-title" class="highlight-text" style="opacity: 0; transition: opacity 1s;">برا السالفة
+                    هو...</h3>
+                <h1 id="suspense-spy-names"
+                    style="color: var(--danger); opacity: 0; transition: opacity 1s; margin-top: 10px;">---</h1>
+
+                <button id="btn-suspense-next" class="primary-btn large mt-2"
+                    style="display: none; margin-top: 30px;">التالي</button>
+            </div>
+        </div>
+
+
+        <!-- =======================
+             SCREEN: SPY GUESSING 
+             ======================= -->
+        <div id="screen-spy-guess" class="screen">
+            <header>
+                <h2>فرصة النجاة!</h2>
+                <p id="spy-guess-instruction" class="subtitle">---</p>
+            </header>
+
+            <main>
+                <div class="card result-card">
+                    <p class="vote-prompt">بما أنك انصتّ لهم طول الجولة، اختر الكلمة التي تعتقد أنها السالفة:</p>
+                    <div id="spy-guess-words-list" class="voting-grid" style="margin-top: 20px;">
+                        <!-- Words populated via JS -->
+                    </div>
+                </div>
+            </main>
+        </div>
+
+
+        <!-- =======================
+             SCREEN: ROUND RESULTS 
+             ======================= -->
+        <div id="screen-round-results" class="screen">
+            <header>
+                <h2>نتائج الجولة</h2>
+            </header>
+
+            <main>
+                <div class="card result-card">
+                    <h3 class="result-spy-reveal">برا السالفة كان: <span id="actual-spy-name"
+                            class="highlight-text">---</span></h3>
+                    <p id="round-result-msg" class="result-msg">---</p>
+
+                    <div class="leaderboard">
+                        <h4>ترتيب النقاط:</h4>
+                        <ul id="round-leaderboard-list">
+                            <!-- Leaderboard populated via JS -->
+                        </ul>
+                    </div>
+                </div>
+
+                <button id="btn-next-round" class="primary-btn large">الجولة التالية</button>
+            </main>
+        </div>
+
+
+        <!-- =======================
+             SCREEN: FINAL RESULTS 
+             ======================= -->
+        <div id="screen-final-results" class="screen">
+            <div class="center-content">
+                <i class="icon-trophy">🏆</i>
+                <h2 class="winner-title">الفائز النهائي!</h2>
+                <h1 id="final-winner-name" class="highlight-text">---</h1>
+
+                <div class="final-leaderboard card">
+                    <ul id="final-leaderboard-list">
+                        <!-- Final leaderboard populated via JS -->
+                    </ul>
+                </div>
+
+                <div id="stats-container" class="card" style="display: none; margin-top: 20px;">
+                    <h3>إحصائيات الجلسة 📊</h3>
+                    <ul id="stats-list" class="stats-list" style="text-align: right; list-style: none; padding: 0;">
+                        <!-- Stats populated via JS -->
+                    </ul>
+                </div>
+
+                <button id="btn-new-game" class="primary-btn large mt-2">لعبة جديدة</button>
+            </div>
+        </div>
+
+        <!-- TRANSITION OVERLAY -->
+        <div id="transition-overlay" class="overlay">
+            <div class="spinner"></div>
+        </div>
+
+        <!-- CUSTOM MODAL COMPONENT -->
+        <div id="custom-modal-overlay" class="modal-overlay">
+            <div class="modal-card">
+                <div id="modal-icon" class="modal-icon">❗</div>
+                <h3 id="modal-title" class="modal-title">---</h3>
+                <div id="modal-body" class="modal-body">---</div>
+                <div id="modal-actions" class="modal-actions">
+                    <button id="modal-btn-cancel" class="secondary-btn small">إلغاء</button>
+                    <button id="modal-btn-confirm" class="primary-btn small">تأكيد</button>
+                </div>
+            </div>
+        </div>
+
+        <footer class="credits">
+            برمجة بكر محمد
+        </footer>
+    </div>
+
+    <!-- Audio Elements -->
+    <audio id="audio-heartbeat" src="https://actions.google.com/sounds/v1/human_voices/heartbeat.ogg"
+        preload="auto"></audio>
+    <audio id="audio-tada" src="https://actions.google.com/sounds/v1/cartoon/cartoon_success_fanfare.ogg"
+        preload="auto"></audio>
+    <audio id="audio-fail" src="https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg"
+        preload="auto"></audio>
+
+    <!-- Scripts -->
+    <!-- ====================================================
+         ⚙️ إعداد السيرفر: ضع رابط Glitch هنا
+         ==================================================== -->
+    <script>
+        const SERVER_URL = 'https://47bda2a5-f4e5-46c5-9aa1-89af4f2867a7-00-1yd4t74fi33hh.janeway.replit.dev';
+    </script>
+    <script
+        src="https://47bda2a5-f4e5-46c5-9aa1-89af4f2867a7-00-1yd4t74fi33hh.janeway.replit.dev/socket.io/socket.io.js"></script>
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+    <script>
+        // Check for service worker support
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                    })
+                    .catch(error => {
+                        console.error('ServiceWorker registration failed: ', error);
+                    });
+            });
+        }
+    </script>
+</body>
+
+</html>
